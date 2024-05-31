@@ -1,0 +1,226 @@
+[
+    {
+        "id": "3e1b526266ce4324",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d4c398f95f2cd20f",
+        "type": "mqtt in",
+        "z": "3e1b526266ce4324",
+        "name": "",
+        "topic": "sensorDistance_XFlyUK",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f371954adee5799d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "cf61f3d3292d64d9"
+            ]
+        ]
+    },
+    {
+        "id": "1d7a08a3cdf3667b",
+        "type": "function",
+        "z": "3e1b526266ce4324",
+        "name": "Distance",
+        "func": "return {payload: msg.payload,\n    topic:\"Distance\"\n};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 140,
+        "wires": [
+            [
+                "1b329fc8f98d4dae",
+                "ef8ea507757e1136"
+            ]
+        ]
+    },
+    {
+        "id": "cf61f3d3292d64d9",
+        "type": "delay",
+        "z": "3e1b526266ce4324",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": true,
+        "outputs": 1,
+        "x": 510,
+        "y": 100,
+        "wires": [
+            [
+                "1d7a08a3cdf3667b"
+            ]
+        ]
+    },
+    {
+        "id": "1b329fc8f98d4dae",
+        "type": "debug",
+        "z": "3e1b526266ce4324",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ef8ea507757e1136",
+        "type": "function",
+        "z": "3e1b526266ce4324",
+        "name": "Numerical Value",
+        "func": "var payload = msg.payload;\nvar startIndex = payload.indexOf(':') + 2; // Find the index of '=' and add 2 to skip over it and the space\nvar endIndex = payload.indexOf('mm') - 1; // Find the index of 'mm'\nvar numericalValue = payload.substring(startIndex, endIndex); // Extract the substring containing the numerical value\n\n// Return the extracted numerical value with a modified topic\nreturn {\n    payload: numericalValue,\n    topic: \"Distance\"\n};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 100,
+        "wires": [
+            [
+                "f86bec5ff3bda438",
+                "7e41570d46aa39b1"
+            ]
+        ]
+    },
+    {
+        "id": "f86bec5ff3bda438",
+        "type": "debug",
+        "z": "3e1b526266ce4324",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7e41570d46aa39b1",
+        "type": "ui_chart",
+        "z": "3e1b526266ce4324",
+        "name": "",
+        "group": "01acc8efbdc4bbe7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Altitude Variation",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1250",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1130,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f371954adee5799d",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "01acc8efbdc4bbe7",
+        "type": "ui_group",
+        "name": "Distance Variation",
+        "tab": "03113816d7c8d218",
+        "order": 1,
+        "disp": true,
+        "width": 14,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "03113816d7c8d218",
+        "type": "ui_tab",
+        "name": "XFly",
+        "icon": "Distance Measurement",
+        "disabled": false,
+        "hidden": false
+    }
+]
